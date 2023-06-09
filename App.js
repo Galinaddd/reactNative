@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,6 +13,13 @@ import {
   Dimensions,
 } from "react-native";
 
+import {
+  useFonts,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold,
+} from "@expo-google-fonts/roboto";
+
 import image from "./assets/images/BG.jpg";
 
 const initialState = {
@@ -21,24 +28,17 @@ const initialState = {
   password: "",
 };
 
-import {
-  useFonts,
-  Roboto_400Regular,
-  Roboto_500Medium,
-  Roboto_700Bold,
-} from "@expo-google-fonts/roboto";
-
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_500Medium,
-    Roboto_700Bold,
-  });
+  // const [fontsLoaded] = useFonts({
+  //   Roboto_400Regular,
+  //   Roboto_500Medium,
+  //   Roboto_700Bold,
+  // });
 
-  if (!fontsLoaded) {
-    console.log("something is wrong");
-    return null;
-  }
+  // if (!fontsLoaded) {
+  //   console.log("something is wrong");
+  //   return null;
+  // }
 
   // useEffect(() => {
   //   const onChange = () => {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     marginTop: 92,
     marginBottom: 33,
     color: "#212121",
-    fontFamily: "Roboto_500Medium",
+    // fontFamily: "Roboto_500Medium",
     fontSize: 30,
     fontWeight: 500,
     textAlign: "center",
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
     paddingHorizontal: 30,
-    fontFamily: "Roboto_400Regular",
+    // fontFamily: "Roboto_400Regular",
     fontWeight: 400,
   },
   inputsContainer: {},
