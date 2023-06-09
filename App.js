@@ -12,9 +12,6 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
-import * as Font from "expo-font";
-import { useFonts } from "expo-font";
-import { Apploading } from "expo";
 
 import image from "./assets/images/BG.jpg";
 
@@ -23,42 +20,41 @@ const initialState = {
   email: "",
   password: "",
 };
-const loadApplication = async () => {
-  await Font.loadAsync({
-    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
-    "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
-  });
-};
+
+import {
+  useFonts,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold,
+} from "@expo-google-fonts/roboto";
 
 export default function App() {
-  // const [fontsLoaded] = useFonts({
-  //   "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
-  //   "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
-  //   "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
-  // });
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_500Medium,
+    Roboto_700Bold,
+  });
 
-  // console.log("fontsLoaded", fontsLoaded);
+  if (!fontsLoaded) {
+    console.log("something is wrong");
+    return null;
+  }
 
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
-
-  useEffect(() => {
-    const onChange = () => {
-      const width = Dimensions.get("window").width;
-      console.log(width);
-      Dimensions.addEventListener("change", onChange);
-    };
-    return () => {
-      Dimensions.removeEventListener("change", onChange);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const onChange = () => {
+  //     const width = Dimensions.get("window").width;
+  //     console.log(width);
+  //     Dimensions.addEventListener("change", onChange);
+  //   };
+  //   return () => {
+  //     Dimensions.removeEventListener("change", onChange);
+  //   };
+  // }, []);
 
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  console.log(Platform.OS);
+  // const [isReady, setIsReady] = useState(false);
+  // console.log(Platform.OS);
 
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
@@ -67,17 +63,17 @@ export default function App() {
     setState(initialState);
   };
 
-  if (!isReady) {
-    return (
-      <Apploading
-        startAsync={loadApplication}
-        onFinish={() => {
-          setIsReady(true);
-        }}
-        onerror={console.warn}
-      />
-    );
-  }
+  // if (!isReady) {
+  //   return (
+  //     <Apploading
+  //       startAsync={loadApplication}
+  //       onFinish={() => {
+  //         setIsReady(true);
+  //       }}
+  //       onerror={console.warn}
+  //     />
+  //   );
+  // }
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
@@ -173,7 +169,7 @@ const styles = StyleSheet.create({
     marginTop: 92,
     marginBottom: 33,
     color: "#212121",
-    fontFamily: "Roboto-Medium",
+    fontFamily: "Roboto_500Medium",
     fontSize: 30,
     fontWeight: 500,
     textAlign: "center",
@@ -185,14 +181,14 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
     paddingHorizontal: 30,
-    fontFamily: "Roboto-Regular",
+    fontFamily: "Roboto_400Regular",
     fontWeight: 400,
   },
   inputsContainer: {},
   input: {
     color: "#212121",
     fontSize: 16,
-    // fontFamily: "Roboto-Regular",
+    // fontFamily: "Roboto_400Regular",
     // fontWeight: 400,
     borderWidth: 1,
     borderRadius: 8,
@@ -213,7 +209,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     textAlign: "center",
     fontSize: 16,
-    // fontFamily: "Roboto-Regular",
+    // fontFamily: "Roboto_400Regular",
     // fontWeight: 400,
   },
   text: {
@@ -221,7 +217,7 @@ const styles = StyleSheet.create({
     marginBottom: 78,
     textAlign: "center",
     fontSize: 16,
-    // fontFamily: "Roboto-Regular",
+    // fontFamily: "Roboto_400Regular",
     // fontWeight: 400,
   },
 });
