@@ -13,17 +13,6 @@ import {
   Dimensions,
 } from "react-native";
 
-// import { useFonts } from "expo-font";
-// import * as Font from "expo-font";
-// import { AppLoading } from "expo";
-
-// import {
-//   useFonts,
-//   Roboto_400Regular,
-//   Roboto_500Medium,
-//   Roboto_700Bold,
-// } from "@expo-google-fonts/roboto";
-
 import image from "./assets/images/BG.jpg";
 
 const initialState = {
@@ -32,30 +21,7 @@ const initialState = {
   password: "",
 };
 
-// const loadApplication = async () => {
-//   await Font.loadAsync({
-//     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
-//   });
-// };
-
-export default function App() {
-  // const [fontsLoaded] = useFonts({
-  //   Roboto_400Regular,
-  //   Roboto_500Medium,
-  //   Roboto_700Bold,
-  // });
-
-  // if (!fontsLoaded) {
-  //   console.log("something is wrong");
-  //   return null;
-  // }
-
-  // const a = Object.assign({}, fontsLoaded);
-  // if (!a) {
-  //   console.log("something is wrong");
-  //   return null;
-  // }
-
+export default function LoginScreen() {
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   // const [dimensions, setDimensions] = useState(
@@ -82,16 +48,6 @@ export default function App() {
     console.log(state);
     setState(initialState);
   };
-
-  // if (!isReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={loadApplication}
-  //       onFinish={() => setIsReady(true)}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
