@@ -61,13 +61,17 @@ export default function RegistrationScreen({ navigation }) {
           <View
             style={{
               ...styles.formContainer,
-              // marginBottom: isShowKeyBoard ? 174 : 268,
 
               // width: dimensions,
             }}
           >
             <Text style={styles.header}>Реєстрація</Text>
-            <View style={styles.form}>
+            <View
+              style={{
+                ...styles.form,
+                marginBottom: isShowKeyBoard ? -97 : 78,
+              }}
+            >
               {/* <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
               > */}
@@ -132,7 +136,6 @@ export default function RegistrationScreen({ navigation }) {
               </Text>
             </View>
           </View>
-
           {/* </KeyboardAvoidingView> */}
         </ImageBackground>
       </View>
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
   },
   form: {},
   button: {
+    marginTop: 27,
     backgroundColor: "#FF6C00",
     borderRadius: 100,
     paddingVertical: 16,
@@ -197,7 +201,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 16,
-    marginBottom: 78,
+    //
     textAlign: "center",
     fontSize: 16,
     // fontFamily: "Roboto_400Regular",

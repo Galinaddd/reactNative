@@ -60,7 +60,6 @@ export default function LoginScreen({ navigation }) {
           <View
             style={{
               ...styles.formContainer,
-              //   marginTop: isShowKeyBoard ? 174 : 268,
 
               // width: dimensions,
             }}
