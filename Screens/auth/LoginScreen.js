@@ -13,7 +13,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import image from "./assets/images/BG.jpg";
+import image from "../../assets/images/BG.jpg";
 
 const initialState = {
   login: "",
@@ -21,7 +21,7 @@ const initialState = {
   password: "",
 };
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   // const [dimensions, setDimensions] = useState(
@@ -48,82 +48,81 @@ export default function LoginScreen() {
     console.log(state);
     setState(initialState);
   };
+  //   console.log("keyboard", Keyboard.isVisible());
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+          {/* <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          > */}
           <View
             style={{
               ...styles.formContainer,
-              // marginTop: isShowKeyBoard ? 174 : 268,
+              //   marginTop: isShowKeyBoard ? 174 : 268,
+
               // width: dimensions,
             }}
           >
-            <Text style={styles.header}>Реєстрація</Text>
+            <Text style={styles.header}>Увійти</Text>
             <View style={styles.form}>
-              <KeyboardAvoidingView
+              {/* <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
+              > */}
+              <View
+                style={{
+                  ...styles.inputsContainer,
+                  marginBottom: isShowKeyBoard ? 32 : 43,
+                }}
               >
-                <View
-                  style={{
-                    ...styles.inputsContainer,
-                    marginBottom: isShowKeyBoard ? 32 : 43,
+                <TextInput
+                  style={styles.input}
+                  placeholder="Адреса електронної пошти"
+                  placeholderTextColor="#bdbdbd"
+                  value={state.email}
+                  onFocus={() => {
+                    setIsShowKeyBoard(true);
                   }}
-                >
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Логін"
-                    placeholderTextColor="#bdbdbd"
-                    value={state.login}
-                    onFocus={() => {
-                      setIsShowKeyBoard(true);
-                    }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, login: value }))
-                    }
-                  />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Адреса електронної пошти"
-                    placeholderTextColor="#bdbdbd"
-                    value={state.email}
-                    onFocus={() => {
-                      setIsShowKeyBoard(true);
-                    }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, email: value }))
-                    }
-                  />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Пароль"
-                    secureTextEntry
-                    placeholderTextColor="#bdbdbd"
-                    value={state.password}
-                    onFocus={() => {
-                      setIsShowKeyBoard(true);
-                    }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({
-                        ...prevState,
-                        password: value,
-                      }))
-                    }
-                  />
-                </View>
-              </KeyboardAvoidingView>
+                  onChangeText={(value) =>
+                    setState((prevState) => ({ ...prevState, email: value }))
+                  }
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Пароль"
+                  secureTextEntry
+                  placeholderTextColor="#bdbdbd"
+                  value={state.password}
+                  onFocus={() => {
+                    setIsShowKeyBoard(true);
+                  }}
+                  onChangeText={(value) =>
+                    setState((prevState) => ({
+                      ...prevState,
+                      password: value,
+                    }))
+                  }
+                />
+              </View>
+              {/* </KeyboardAvoidingView> */}
 
               <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.7}
                 onPress={keyboardHide}
               >
-                <Text style={styles.buttonTitle}>Зареєстуватися</Text>
+                <Text style={styles.buttonTitle}>Увійти</Text>
               </TouchableOpacity>
-              <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+              <Text style={styles.text}>
+                Немає акаунту?
+                <Text onPress={() => navigation.navigate("Registration")}>
+                  Зареєструватися
+                </Text>
+              </Text>
             </View>
           </View>
+          {/* </KeyboardAvoidingView> */}
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    marginTop: 92,
+    marginTop: 32,
     marginBottom: 33,
     color: "#212121",
     // fontFamily: "Roboto-Regular",
@@ -172,7 +171,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
   },
-  form: {},
+  form: {
+    marginBottom: 144,
+  },
   button: {
     backgroundColor: "#FF6C00",
     borderRadius: 100,
@@ -187,7 +188,8 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 16,
-    marginBottom: 78,
+
+    // marginBottom: 144,
     textAlign: "center",
     fontSize: 16,
     // fontFamily: "Roboto_400Regular",
