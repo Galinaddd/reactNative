@@ -100,7 +100,7 @@ export default function RegistrationScreen({ navigation }) {
                   <TextInput
                     style={styles.input}
                     placeholder="Пароль"
-                    secureTextEntry
+                    secureTextEntry={isVisiblePassword ? false : true}
                     placeholderTextColor="#bdbdbd"
                     value={state.password}
                     onFocus={() => {
@@ -117,7 +117,7 @@ export default function RegistrationScreen({ navigation }) {
                     style={styles.passwordViewText}
                     onPress={() => setIsVisiblePassword((prev) => !prev)}
                   >
-                    Показати/приховати
+                    {isVisiblePassword ? "Приховати" : "Показати"}
                   </Text>
                 </View>
 

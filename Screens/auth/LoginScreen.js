@@ -24,6 +24,7 @@ const initialState = {
 export default function LoginScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   // const [dimensions, setDimensions] = useState(
   //   Dimensions.get("window").width - 30 * 2
   // );
@@ -88,7 +89,7 @@ export default function LoginScreen({ navigation }) {
                   <TextInput
                     style={styles.input}
                     placeholder="Пароль"
-                    secureTextEntry
+                    secureTextEntry={isVisiblePassword ? false : true}
                     placeholderTextColor="#bdbdbd"
                     value={state.password}
                     onFocus={() => {
@@ -101,8 +102,11 @@ export default function LoginScreen({ navigation }) {
                       }))
                     }
                   />
-                  <Text style={styles.passwordViewText}>
-                    Показати/приховати
+                  <Text
+                    style={styles.passwordViewText}
+                    onPress={() => setIsVisiblePassword((prev) => !prev)}
+                  >
+                    {isVisiblePassword ? "Приховати" : "Показати"}
                   </Text>
                 </View>
                 <TouchableOpacity
