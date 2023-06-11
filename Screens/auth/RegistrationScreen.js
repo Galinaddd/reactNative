@@ -105,6 +105,7 @@ export default function RegistrationScreen({ navigation }) {
                     setState((prevState) => ({ ...prevState, email: value }))
                   }
                 />
+
                 <TextInput
                   style={styles.input}
                   placeholder="Пароль"

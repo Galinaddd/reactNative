@@ -65,14 +65,18 @@ export default function LoginScreen({ navigation }) {
             }}
           >
             <Text style={styles.header}>Увійти</Text>
-            <View style={styles.form}>
+            <View
+              style={{
+                ...styles.form,
+                marginBottom: isShowKeyBoard ? -97 : 144,
+              }}
+            >
               {/* <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
               > */}
               <View
                 style={{
                   ...styles.inputsContainer,
-                  marginBottom: isShowKeyBoard ? 32 : 43,
                 }}
               >
                 <TextInput
@@ -171,9 +175,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   form: {
-    marginBottom: 144,
+    // marginBottom: 144,
   },
   button: {
+    marginTop: 27,
     backgroundColor: "#FF6C00",
     borderRadius: 100,
     paddingVertical: 16,
