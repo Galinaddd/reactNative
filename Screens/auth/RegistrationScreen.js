@@ -74,10 +74,19 @@ export default function RegistrationScreen({ navigation }) {
                 <TextInput
                   style={styles.input}
                   placeholder="Логін"
+                  name="login"
                   placeholderTextColor="#bdbdbd"
                   value={state.login}
-                  onFocus={() => {
+                  onFocus={(event) => {
                     setIsShowKeyBoard(true);
+                    event.target.setNativeProps({
+                      style: styles.inputFocused,
+                    });
+                  }}
+                  onBlur={(event) => {
+                    event.target.setNativeProps({
+                      style: styles.input,
+                    });
                   }}
                   onChangeText={(value) =>
                     setState((prevState) => ({ ...prevState, login: value }))
@@ -88,8 +97,16 @@ export default function RegistrationScreen({ navigation }) {
                   placeholder="Адреса електронної пошти"
                   placeholderTextColor="#bdbdbd"
                   value={state.email}
-                  onFocus={() => {
+                  onFocus={(event) => {
                     setIsShowKeyBoard(true);
+                    event.target.setNativeProps({
+                      style: styles.inputFocused,
+                    });
+                  }}
+                  onBlur={(event) => {
+                    event.target.setNativeProps({
+                      style: styles.input,
+                    });
                   }}
                   onChangeText={(value) =>
                     setState((prevState) => ({ ...prevState, email: value }))
@@ -103,8 +120,16 @@ export default function RegistrationScreen({ navigation }) {
                     secureTextEntry={isVisiblePassword ? false : true}
                     placeholderTextColor="#bdbdbd"
                     value={state.password}
-                    onFocus={() => {
+                    onFocus={(event) => {
                       setIsShowKeyBoard(true);
+                      event.target.setNativeProps({
+                        style: styles.inputFocused,
+                      });
+                    }}
+                    onBlur={(event) => {
+                      event.target.setNativeProps({
+                        style: styles.input,
+                      });
                     }}
                     onChangeText={(value) =>
                       setState((prevState) => ({
@@ -185,6 +210,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
   },
+  inputFocused: {
+    backgroundColor: "#ffffff",
+    borderColor: "#FF6C00",
+  },
+  //   inputBlurred: { backgroundColor: "#f6f6f6", borderColor: "#e8e8e8" },
   passwordViewText: {
     position: "absolute",
     top: 16,

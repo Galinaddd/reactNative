@@ -78,8 +78,16 @@ export default function LoginScreen({ navigation }) {
                   placeholder="Адреса електронної пошти"
                   placeholderTextColor="#bdbdbd"
                   value={state.email}
-                  onFocus={() => {
+                  onFocus={(event) => {
                     setIsShowKeyBoard(true);
+                    event.target.setNativeProps({
+                      style: styles.inputFocused,
+                    });
+                  }}
+                  onBlur={(event) => {
+                    event.target.setNativeProps({
+                      style: styles.input,
+                    });
                   }}
                   onChangeText={(value) =>
                     setState((prevState) => ({ ...prevState, email: value }))
@@ -92,8 +100,16 @@ export default function LoginScreen({ navigation }) {
                     secureTextEntry={isVisiblePassword ? false : true}
                     placeholderTextColor="#bdbdbd"
                     value={state.password}
-                    onFocus={() => {
+                    onFocus={(event) => {
                       setIsShowKeyBoard(true);
+                      event.target.setNativeProps({
+                        style: styles.inputFocused,
+                      });
+                    }}
+                    onBlur={(event) => {
+                      event.target.setNativeProps({
+                        style: styles.input,
+                      });
                     }}
                     onChangeText={(value) =>
                       setState((prevState) => ({
@@ -172,6 +188,10 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 16,
     marginBottom: 16,
+  },
+  inputFocused: {
+    backgroundColor: "#ffffff",
+    borderColor: "#FF6C00",
   },
   passwordViewText: {
     position: "absolute",
