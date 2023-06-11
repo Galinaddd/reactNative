@@ -13,7 +13,6 @@ import {
   Dimensions,
   Button,
 } from "react-native";
-import LoginScreen from "./LoginScreen";
 
 import image from "../../assets/images/BG.jpg";
 
@@ -24,9 +23,9 @@ const initialState = {
 };
 
 export default function RegistrationScreen({ navigation }) {
-  //   console.log(navigation);
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   // const [dimensions, setDimensions] = useState(
   //   Dimensions.get("window").width - 30 * 2
   // );
@@ -55,30 +54,21 @@ export default function RegistrationScreen({ navigation }) {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-          {/* <KeyboardAvoidingView
+          <KeyboardAvoidingView
+            style={{ flex: 1, justifyContent: "flex-end" }}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-          > */}
-          <View
-            style={{
-              ...styles.formContainer,
-
-              // width: dimensions,
-            }}
           >
-            <Text style={styles.header}>Реєстрація</Text>
             <View
               style={{
-                ...styles.form,
-                marginBottom: isShowKeyBoard ? -97 : 78,
+                ...styles.formContainer,
+                // width: dimensions,
               }}
             >
-              {/* <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-              > */}
+              <Text style={styles.header}>Реєстрація</Text>
               <View
                 style={{
-                  ...styles.inputsContainer,
-                  // marginBottom: isShowKeyBoard ? 32 : 43,
+                  ...styles.form,
+                  marginBottom: isShowKeyBoard ? -97 : 78,
                 }}
               >
                 <TextInput
@@ -106,38 +96,50 @@ export default function RegistrationScreen({ navigation }) {
                   }
                 />
 
-                <TextInput
-                  style={styles.input}
-                  placeholder="Пароль"
-                  secureTextEntry
-                  placeholderTextColor="#bdbdbd"
-                  value={state.password}
-                  onFocus={() => {
-                    setIsShowKeyBoard(true);
-                  }}
-                  onChangeText={(value) =>
-                    setState((prevState) => ({
-                      ...prevState,
-                      password: value,
-                    }))
-                  }
-                />
+                <View style={{ position: "relative" }}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Пароль"
+                    secureTextEntry
+                    placeholderTextColor="#bdbdbd"
+                    value={state.password}
+                    onFocus={() => {
+                      setIsShowKeyBoard(true);
+                    }}
+                    onChangeText={(value) =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        password: value,
+                      }))
+                    }
+                  />
+                  <Text
+                    style={styles.passwordViewText}
+                    onPress={() => setIsVisiblePassword((prev) => !prev)}
+                  >
+                    Показати/приховати
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  activeOpacity={0.7}
+                  onPress={keyboardHide}
+                >
+                  <Text style={styles.buttonTitle}>Зареєстуватися</Text>
+                </TouchableOpacity>
+                <View style={styles.textContainer}>
+                  <Text style={styles.text}>Вже є акаунт? </Text>
+                  <Text
+                    style={{ ...styles.text, textDecorationLine: "underline" }}
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    Увійти
+                  </Text>
+                </View>
               </View>
-              {/* </KeyboardAvoidingView> */}
-              <TouchableOpacity
-                style={styles.button}
-                activeOpacity={0.7}
-                onPress={keyboardHide}
-              >
-                <Text style={styles.buttonTitle}>Зареєстуватися</Text>
-              </TouchableOpacity>
-              <Text style={styles.text}>
-                Вже є акаунт?
-                <Text onPress={() => navigation.navigate("Login")}>Увійти</Text>
-              </Text>
             </View>
-          </View>
-          {/* </KeyboardAvoidingView> */}
+          </KeyboardAvoidingView>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
@@ -158,9 +160,8 @@ const styles = StyleSheet.create({
     marginTop: 92,
     marginBottom: 33,
     color: "#212121",
-    // fontFamily: "Roboto-Regular",
+    fontFamily: "Roboto-Medium",
     fontSize: 30,
-    fontWeight: 500,
     textAlign: "center",
     letterSpacing: 1,
     lineHeight: 35.16,
@@ -170,21 +171,27 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
     paddingHorizontal: 30,
-    // fontFamily: "Roboto_400Regular",
-    fontWeight: 400,
   },
-  inputsContainer: {},
+
   input: {
     color: "#212121",
     fontSize: 16,
-    // fontFamily: "Roboto_400Regular",
+    fontFamily: "Roboto-Regular",
     borderWidth: 1,
     borderRadius: 8,
     backgroundColor: "#f6f6f6",
     borderColor: "#e8e8e8",
-    height: 40,
+    height: 50,
     paddingHorizontal: 16,
     marginBottom: 16,
+  },
+  passwordViewText: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#1B4371",
   },
   form: {},
   button: {
@@ -198,13 +205,17 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     textAlign: "center",
     fontSize: 16,
-    // fontFamily: "Roboto_400Regular",
+    fontFamily: "Roboto-Regular",
+  },
+  textContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "baseline",
   },
   text: {
     marginTop: 16,
-    //
     textAlign: "center",
     fontSize: 16,
-    // fontFamily: "Roboto_400Regular",
+    fontFamily: "Roboto-Regular",
   },
 });
