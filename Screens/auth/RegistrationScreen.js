@@ -182,9 +182,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
   },
-  form: {
-    marginBottom: 78,
-  },
+  form: {},
   button: {
     backgroundColor: "#FF6C00",
     borderRadius: 100,
@@ -199,7 +197,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 16,
-    // marginBottom: 78,
+    marginBottom: 78,
     textAlign: "center",
     fontSize: 16,
     // fontFamily: "Roboto_400Regular",

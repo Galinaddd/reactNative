@@ -22,7 +22,7 @@ import LoginScreen from "./Screens/auth/LoginScreen";
 //     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
 //   });
 // };
-
+import image from "./assets/images/BG.jpg";
 const Stack = createStackNavigator();
 
 export default function App() {
