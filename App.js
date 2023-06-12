@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import RegistrationScreen from "./Screens/auth/RegistrationScreen";
 import LoginScreen from "./Screens/auth/LoginScreen";
@@ -10,6 +11,7 @@ import { useFonts } from "expo-font";
 
 // import image from "./assets/images/BG.jpg";
 const Stack = createStackNavigator();
+const MainTab = createBottomTabNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
