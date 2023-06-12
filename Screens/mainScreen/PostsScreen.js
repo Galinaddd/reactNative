@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
+  View,
   //   View,
   //   ImageBackground,
   //   TextInput,
@@ -15,9 +16,19 @@ import {
 } from "react-native";
 
 export default function PostsScreen({ navigation }) {
-  return <Text>CreatePostsScreen</Text>;
+  return (
+    <View style={styles.container}>
+      <Text>PostsScreen</Text>
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   //   text: {
   //     marginTop: 16,
   //     textAlign: "center",

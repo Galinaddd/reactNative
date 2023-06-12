@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
-
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import RegistrationScreen from "./Screens/auth/RegistrationScreen";
-import LoginScreen from "./Screens/auth/LoginScreen";
-
 import { useFonts } from "expo-font";
 
+import { NavigationContainer } from "@react-navigation/native";
+import { useRoute } from "./router";
+
 // import image from "./assets/images/BG.jpg";
-const Stack = createStackNavigator();
-const MainTab = createBottomTabNavigator();
 
 export default function App() {
+  const routing = useRoute({});
+
   const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
@@ -25,20 +20,7 @@ export default function App() {
     return null;
   }
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Registration"
-          component={RegistrationScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{routing}</NavigationContainer>;
 }
+
+// auth
