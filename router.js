@@ -42,10 +42,15 @@ export const useRoute = (isAuth) => {
           fontFamily: "Roboto-Medium",
           fontSize: 17,
           lineHeight: 22,
-
           textAlign: "center",
           letterSpacing: -0.408,
         },
+        headerTitleAlign: "center",
+        headerTitleContainerStyle: {
+          paddingTop: 55,
+          paddingBottom: 11,
+        },
+
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#FFFFFF",
