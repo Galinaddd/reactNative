@@ -33,34 +33,34 @@ export const useRoute = (isAuth) => {
   }
   return (
     <MainTab.Navigator
-      screenOptions={{
-        headerStyle: {
-          height: 88,
-        },
-        headerTintColor: "#212121",
-        headerTitleStyle: {
-          fontFamily: "Roboto-Medium",
-          fontSize: 17,
-          lineHeight: 22,
-          textAlign: "center",
-          letterSpacing: -0.408,
-        },
-        headerTitleAlign: "center",
-        headerTitleContainerStyle: {
-          paddingTop: 55,
-          paddingBottom: 11,
-        },
+    // screenOptions={{
+    //   headerStyle: {
+    //     height: 88,
+    //   },
+    //   headerTintColor: "#212121",
+    //   headerTitleStyle: {
+    //     fontFamily: "Roboto-Medium",
+    //     fontSize: 17,
+    //     lineHeight: 22,
+    //     textAlign: "center",
+    //     letterSpacing: -0.408,
+    //   },
+    //   headerTitleAlign: "center",
+    //   headerTitleContainerStyle: {
+    //     paddingTop: 55,
+    //     paddingBottom: 11,
+    //   },
 
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: "#FFFFFF",
-          boxShadow: "0px -0.5px 0px rgba(0, 0, 0, 0.3)",
-          paddingHorizontal: 81,
-          height: 83,
-          paddingTop: 9,
-          paddingBottom: 34,
-        },
-      }}
+    //   tabBarShowLabel: false,
+    //   tabBarStyle: {
+    //     backgroundColor: "#FFFFFF",
+    //     boxShadow: "0px -0.5px 0px rgba(0, 0, 0, 0.3)",
+    //     paddingHorizontal: 81,
+    //     height: 83,
+    //     paddingTop: 9,
+    //     paddingBottom: 34,
+    //   },
+    // }}
     >
       <MainTab.Screen
         name="Posts"
