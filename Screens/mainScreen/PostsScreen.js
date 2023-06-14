@@ -14,11 +14,28 @@ export default function PostsScreen({ navigation, route }) {
   // console.log("route.params", route.params);
   return (
     <View style={styles.container}>
-      <FlatList
+      {/* <FlatList
         style={{ backgroundColor: "red" }}
         data={posts}
         keyExtractor={(item, indx) => {
           indx;
+        }}
+        // renderItem={({ item }) => (
+        //   <View style={{}}>
+        //     <PostListItem />
+        //   </View>
+        // )}
+        renderItem={({ item }) => (
+          <View style={{}}>
+            <PostCard postInfo={item} />
+          </View>
+        )}
+      /> */}
+      <FlatList
+        style={{ backgroundColor: "red" }}
+        data={posts}
+        keyExtractor={(item, indx) => {
+          indx.toString();
         }}
         // renderItem={({ item }) => (
         //   <View style={{}}>

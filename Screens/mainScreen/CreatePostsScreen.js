@@ -46,7 +46,10 @@ export default function CreatePostsScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "position"}
+      >
         <View style={styles.cameraContainer}>
           <Camera style={styles.camera} ref={setCamera}>
             {photo && (
@@ -123,7 +126,7 @@ export default function CreatePostsScreen({ navigation }) {
         >
           <Text style={styles.buttonTitle}>Опублікувати</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
     paddingTop: 43,
     paddingHorizontal: 16,
 
-    // justifyContent: "center",
+    // justifyContent: "flex-end",
     // alignItems: "center",
   },
   cameraContainer: {
