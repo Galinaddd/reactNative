@@ -1,22 +1,130 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { Camera } from "expo-camera";
 
+const initialState = {
+  name: "",
+  place: "",
+};
+
 export default function CreatePostsScreen({ navigation }) {
+  const [camera, setCamera] = useState(null);
+  const [photo, setPhoto] = useState(null);
+  const [state, setState] = useState(initialState);
+  const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
+
+  const keyboardHide = () => {
+    setIsShowKeyBoard(false);
+    Keyboard.dismiss();
+    setState(initialState);
+  };
+
+  const takePhoto = async () => {
+    console.log("snap", camera);
+    const photo = await camera.takePictureAsync();
+    console.log("photo", photo);
+    setPhoto(photo.uri);
+  };
+  const publishPost = () => {
+    console.log("publishing");
+    console.log("navigation", navigation);
+    keyboardHide();
+    const newPost = { ...state, photo };
+    console.log("newPost", newPost);
+    navigation.navigate("Posts", newPost);
+  };
+
   return (
-    <View style={styles.container}>
-      <Camera style={styles.camera}>
-        <TouchableOpacity style={styles.cameraTouchButton}>
-          <Image
-            source={require("../../assets/icons/camera-black.png")}
-            style={{
-              width: 24,
-              height: 24,
-            }}
-          />
+    <TouchableWithoutFeedback onPress={keyboardHide}>
+      <View style={styles.container}>
+        <View style={styles.cameraContainer}>
+          <Camera style={styles.camera} ref={setCamera}>
+            {photo && (
+              <View style={styles.takePhotoContainer}>
+                <Image
+                  source={{ uri: photo }}
+                  style={{ width: 100, height: 75 }}
+                />
+              </View>
+            )}
+
+            <TouchableOpacity
+              style={styles.cameraTouchButton}
+              onPress={takePhoto}
+            >
+              <Image
+                source={require("../../assets/icons/camera-black.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+            </TouchableOpacity>
+          </Camera>
+        </View>
+        <Text style={styles.text}>Завантажте фото</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Назва..."
+          name="Name"
+          placeholderTextColor="#bdbdbd"
+          value={state.name}
+          onFocus={(event) => {
+            setIsShowKeyBoard(true);
+            event.target.setNativeProps({
+              style: styles.inputFocused,
+            });
+          }}
+          onBlur={(event) => {
+            event.target.setNativeProps({
+              style: styles.input,
+            });
+          }}
+          onChangeText={(value) =>
+            setState((prevState) => ({ ...prevState, name: value }))
+          }
+        />
+        <TextInput
+          style={{ ...styles.input, paddingLeft: 32 }}
+          placeholder="Місцевість..."
+          name="Place"
+          placeholderTextColor="#bdbdbd"
+          value={state.place}
+          onFocus={(event) => {
+            setIsShowKeyBoard(true);
+            event.target.setNativeProps({
+              style: styles.inputFocused,
+            });
+          }}
+          onBlur={(event) => {
+            event.target.setNativeProps({
+              style: styles.input,
+            });
+          }}
+          onChangeText={(value) =>
+            setState((prevState) => ({ ...prevState, place: value }))
+          }
+        />
+        <TouchableOpacity
+          style={styles.button}
+          activeOpacity={0.7}
+          onPress={publishPost}
+        >
+          <Text style={styles.buttonTitle}>Опублікувати</Text>
         </TouchableOpacity>
-      </Camera>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -24,30 +132,77 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
+    paddingTop: 43,
     paddingHorizontal: 16,
 
     // justifyContent: "center",
     // alignItems: "center",
   },
-  camera: {
+  cameraContainer: {
+    // flex: 1,
     height: 240,
-    marginTop: 43,
+    backgroundColor: "red",
+    borderRadius: 8,
+    overflow: "hidden",
+  },
+  camera: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 8,
+    // borderRadius: 10,
+
+    // backgroundColor: "#FF6C00",
+  },
+
+  takePhotoContainer: {
+    position: "absolute",
+    top: 20,
+    left: 10,
+    borderColor: "#FFFFFF",
+    borderWidth: 1,
   },
 
   cameraTouchButton: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     backgroundColor: "#ffffff",
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
   },
-  //   text: {
-  //     marginTop: 16,
-  //     textAlign: "center",
-  //     fontSize: 16,
-  //     fontFamily: "Roboto-Regular",
-  //   },
+  input: {
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    lineHeight: 19,
+    marginTop: 33,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+  },
+  inputFocused: {
+    backgroundColor: "#ffffff",
+    borderColor: "#FF6C00",
+  },
+  text: {
+    marginTop: 8,
+    // textAlign: "center",
+    fontSize: 16,
+    lineHeight: 19,
+    fontFamily: "Roboto-Regular",
+  },
+  button: {
+    marginTop: 32,
+    backgroundColor: "#FF6C00",
+    borderRadius: 100,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    // marginBottom: 194,
+  },
+  buttonTitle: {
+    color: "#ffffff",
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+  },
 });
