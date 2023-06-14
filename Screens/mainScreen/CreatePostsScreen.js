@@ -30,9 +30,9 @@ export default function CreatePostsScreen({ navigation }) {
   };
 
   const takePhoto = async () => {
-    console.log("snap", camera);
+    // console.log("snap", camera);
     const photo = await camera.takePictureAsync();
-    console.log("photo", photo);
+    // console.log("photo", photo);
     setPhoto(photo.uri);
   };
   const publishPost = () => {
