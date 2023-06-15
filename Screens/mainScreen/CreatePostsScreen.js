@@ -11,6 +11,7 @@ import {
   Keyboard,
 } from "react-native";
 import { Camera } from "expo-camera";
+import * as Location from "expo-location";
 
 const initialState = {
   name: "",
@@ -18,6 +19,7 @@ const initialState = {
 };
 
 export default function CreatePostsScreen({ navigation }) {
+  const [location, setLocation] = useState(null);
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [state, setState] = useState(initialState);
@@ -32,7 +34,13 @@ export default function CreatePostsScreen({ navigation }) {
   const takePhoto = async () => {
     // console.log("snap", camera);
     const photo = await camera.takePictureAsync();
-    // console.log("photo", photo);
+
+    const location = await Location.getCurrentPositionAsync({});
+    setLocation(location.coords);
+    // const location = await Location.getCurrentPositionAsync();
+    console.log("location", location);
+    setLocation(location.coords);
+
     setPhoto(photo.uri);
   };
   const publishPost = () => {
@@ -41,8 +49,18 @@ export default function CreatePostsScreen({ navigation }) {
     keyboardHide();
     const newPost = { ...state, photo };
     console.log("newPost", newPost);
-    navigation.navigate("Posts", newPost);
+    navigation.navigate("DefaultScreen", newPost);
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+    })();
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>

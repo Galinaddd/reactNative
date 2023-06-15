@@ -1,39 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import { PostCard } from "../../components/PostCard";
+import { createStackNavigator } from "@react-navigation/stack";
+import DefaultScreen from "../nested/DefaultScreen";
+import MapScreen from "../nested/MapScreen";
+// import CommentsScreen from "../nested/CommentsScreen";
+import CommentsScreen from "../nested/CommentsScreen";
 
-export default function PostsScreen({ navigation, route }) {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    if (route.params) {
-      setPosts((prev) => [...prev, route.params]);
-    }
-  }, [route.params]);
-  console.log("posts", posts);
+const NestedScreen = createStackNavigator();
 
+const PostsScreen = () => {
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={{}}
-        data={posts}
-        keyExtractor={(item, indx) => indx.toString()}
-        renderItem={({ item }) => (
-          <View style={{ marginBottom: 32 }}>
-            <PostCard postInfo={item} />
-          </View>
-        )}
-        decelerationRate={0.5}
-      />
-      <Text>PostsScreen</Text>
-    </View>
+    <NestedScreen.Navigator>
+      <NestedScreen.Screen name="DefaultScreen" component={DefaultScreen} />
+      <NestedScreen.Screen name="Map" component={MapScreen} />
+      <NestedScreen.Screen name="Comments" component={CommentsScreen} />
+    </NestedScreen.Navigator>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    paddingTop: 32,
-    paddingHorizontal: 16,
-    backgroundColor: "#ffffff",
-  },
-});
+export default PostsScreen;
