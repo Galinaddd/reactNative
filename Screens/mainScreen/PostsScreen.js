@@ -10,38 +10,19 @@ export default function PostsScreen({ navigation, route }) {
     }
   }, [route.params]);
   console.log("posts", posts);
-  // console.log("route", route);
-  // console.log("route.params", route.params);
+
   return (
     <View style={styles.container}>
-      {/* <FlatList
-          data={posts}
-          keyExtractor={(item, indx) => indx.toString()}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                marginBottom: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={{ uri: item.photo }}
-                style={{ width: 350, height: 200 }}
-              />
-            </View>
-          )}
-        /> */}
-
       <FlatList
-        style={{ backgroundColor: "red" }}
+        style={{}}
         data={posts}
         keyExtractor={(item, indx) => indx.toString()}
         renderItem={({ item }) => (
-          <View style={{ marginBottom: 32, backgroundColor: "green" }}>
+          <View style={{ marginBottom: 32 }}>
             <PostCard postInfo={item} />
           </View>
         )}
+        decelerationRate={0.5}
       />
       <Text>PostsScreen</Text>
     </View>
@@ -51,7 +32,6 @@ export default function PostsScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-
     paddingTop: 32,
     paddingHorizontal: 16,
     backgroundColor: "#ffffff",
