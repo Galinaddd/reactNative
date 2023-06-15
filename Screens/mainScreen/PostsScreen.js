@@ -15,35 +15,30 @@ export default function PostsScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       {/* <FlatList
-        style={{ backgroundColor: "red" }}
-        data={posts}
-        keyExtractor={(item, indx) => {
-          indx;
-        }}
-        // renderItem={({ item }) => (
-        //   <View style={{}}>
-        //     <PostListItem />
-        //   </View>
-        // )}
-        renderItem={({ item }) => (
-          <View style={{}}>
-            <PostCard postInfo={item} />
-          </View>
-        )}
-      /> */}
+          data={posts}
+          keyExtractor={(item, indx) => indx.toString()}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                marginBottom: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={{ uri: item.photo }}
+                style={{ width: 350, height: 200 }}
+              />
+            </View>
+          )}
+        /> */}
+
       <FlatList
         style={{ backgroundColor: "red" }}
         data={posts}
-        keyExtractor={(item, indx) => {
-          indx.toString();
-        }}
-        // renderItem={({ item }) => (
-        //   <View style={{}}>
-        //     <PostListItem />
-        //   </View>
-        // )}
+        keyExtractor={(item, indx) => indx.toString()}
         renderItem={({ item }) => (
-          <View style={{}}>
+          <View style={{ marginBottom: 32, backgroundColor: "green" }}>
             <PostCard postInfo={item} />
           </View>
         )}
@@ -56,7 +51,9 @@ export default function PostsScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
+
     paddingTop: 32,
     paddingHorizontal: 16,
+    backgroundColor: "#ffffff",
   },
 });
