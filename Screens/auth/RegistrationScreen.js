@@ -26,6 +26,7 @@ export default function RegistrationScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+  let containerMarginbottom;
   // const [dimensions, setDimensions] = useState(
   //   Dimensions.get("window").width - 30 * 2
   // );
@@ -43,40 +44,90 @@ export default function RegistrationScreen({ navigation }) {
   //     Dimensions.removeEventListener("change", onChange);
   //   };
   // }, []);
+  // useEffect(() => {
+  //   containerMarginbottom = isShowKeyBoard ? -97 : 78;
+  // }, [isShowKeyBoard]);
 
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
+    console.log(state);
     setState(initialState);
+    console.log();
   };
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-          <KeyboardAvoidingView
+          {/* <KeyboardAvoidingView
             style={{ flex: 1, justifyContent: "flex-end" }}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
+          > */}
+          <View
+            style={{
+              ...styles.formContainer,
+              // width: dimensions,
+              // marginBottom: containerMarginbottom,
+            }}
           >
+            <Text style={styles.header}>Реєстрація</Text>
             <View
               style={{
-                ...styles.formContainer,
-                // width: dimensions,
+                ...styles.form,
+                // marginBottom: isShowKeyBoard ? -97 : 78,
+                // marginBottom: containerMarginbottom,
               }}
             >
-              <Text style={styles.header}>Реєстрація</Text>
-              <View
-                style={{
-                  ...styles.form,
-                  marginBottom: isShowKeyBoard ? -97 : 78,
+              <TextInput
+                style={styles.input}
+                placeholder="Логін"
+                name="login"
+                placeholderTextColor="#bdbdbd"
+                value={state.login}
+                onFocus={(event) => {
+                  setIsShowKeyBoard(true);
+                  event.target.setNativeProps({
+                    style: styles.inputFocused,
+                  });
                 }}
-              >
+                onBlur={(event) => {
+                  event.target.setNativeProps({
+                    style: styles.input,
+                  });
+                }}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, login: value }))
+                }
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Адреса електронної пошти"
+                placeholderTextColor="#bdbdbd"
+                value={state.email}
+                onFocus={(event) => {
+                  setIsShowKeyBoard(true);
+                  event.target.setNativeProps({
+                    style: styles.inputFocused,
+                  });
+                }}
+                onBlur={(event) => {
+                  event.target.setNativeProps({
+                    style: styles.input,
+                  });
+                }}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, email: value }))
+                }
+              />
+
+              <View style={{ position: "relative" }}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Логін"
-                  name="login"
+                  placeholder="Пароль"
+                  secureTextEntry={isVisiblePassword ? false : true}
                   placeholderTextColor="#bdbdbd"
-                  value={state.login}
+                  value={state.password}
                   onFocus={(event) => {
                     setIsShowKeyBoard(true);
                     event.target.setNativeProps({
@@ -89,82 +140,39 @@ export default function RegistrationScreen({ navigation }) {
                     });
                   }}
                   onChangeText={(value) =>
-                    setState((prevState) => ({ ...prevState, login: value }))
+                    setState((prevState) => ({
+                      ...prevState,
+                      password: value,
+                    }))
                   }
                 />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Адреса електронної пошти"
-                  placeholderTextColor="#bdbdbd"
-                  value={state.email}
-                  onFocus={(event) => {
-                    setIsShowKeyBoard(true);
-                    event.target.setNativeProps({
-                      style: styles.inputFocused,
-                    });
-                  }}
-                  onBlur={(event) => {
-                    event.target.setNativeProps({
-                      style: styles.input,
-                    });
-                  }}
-                  onChangeText={(value) =>
-                    setState((prevState) => ({ ...prevState, email: value }))
-                  }
-                />
-
-                <View style={{ position: "relative" }}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Пароль"
-                    secureTextEntry={isVisiblePassword ? false : true}
-                    placeholderTextColor="#bdbdbd"
-                    value={state.password}
-                    onFocus={(event) => {
-                      setIsShowKeyBoard(true);
-                      event.target.setNativeProps({
-                        style: styles.inputFocused,
-                      });
-                    }}
-                    onBlur={(event) => {
-                      event.target.setNativeProps({
-                        style: styles.input,
-                      });
-                    }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({
-                        ...prevState,
-                        password: value,
-                      }))
-                    }
-                  />
-                  <Text
-                    style={styles.passwordViewText}
-                    onPress={() => setIsVisiblePassword((prev) => !prev)}
-                  >
-                    {isVisiblePassword ? "Приховати" : "Показати"}
-                  </Text>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.button}
-                  activeOpacity={0.7}
-                  onPress={keyboardHide}
+                <Text
+                  style={styles.passwordViewText}
+                  onPress={() => setIsVisiblePassword((prev) => !prev)}
                 >
-                  <Text style={styles.buttonTitle}>Зареєстуватися</Text>
-                </TouchableOpacity>
-                <View style={styles.textContainer}>
-                  <Text style={styles.text}>Вже є акаунт? </Text>
-                  <Text
-                    style={{ ...styles.text, textDecorationLine: "underline" }}
-                    onPress={() => navigation.navigate("Login")}
-                  >
-                    Увійти
-                  </Text>
-                </View>
+                  {isVisiblePassword ? "Приховати" : "Показати"}
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.button}
+                activeOpacity={0.7}
+                onPress={keyboardHide}
+              >
+                <Text style={styles.buttonTitle}>Зареєстуватися</Text>
+              </TouchableOpacity>
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>Вже є акаунт? </Text>
+                <Text
+                  style={{ ...styles.text, textDecorationLine: "underline" }}
+                  onPress={() => navigation.navigate("Login")}
+                >
+                  Увійти
+                </Text>
               </View>
             </View>
-          </KeyboardAvoidingView>
+          </View>
+          {/* </KeyboardAvoidingView> */}
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
@@ -174,6 +182,7 @@ export default function RegistrationScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // marginBottom: 78,
   },
   image: {
     flex: 1,

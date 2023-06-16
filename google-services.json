@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "747472866259",
+    "project_id": "social-react-native-f7bc0",
+    "storage_bucket": "social-react-native-f7bc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747472866259:android:9ae80e332da53cbc017d26",
+        "android_client_info": {
+          "package_name": "com.myOwnProject.Social"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747472866259-v2k76djqgktdknh3h2bg2hgst3ugffki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr9gNCfr-lAIBmdT-sh1_i2EKS_o4YLVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747472866259-v2k76djqgktdknh3h2bg2hgst3ugffki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
