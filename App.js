@@ -3,8 +3,9 @@ import { useFonts } from "expo-font";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { useRoute } from "./router";
+import { Provider } from "react-redux";
 
-// import image from "./assets/images/BG.jpg";
+import { store } from "./redux/store";
 
 export default function App() {
   const routing = useRoute({});
@@ -20,7 +21,11 @@ export default function App() {
     return null;
   }
 
-  return <NavigationContainer>{routing}</NavigationContainer>;
+  return (
+    <Provider store={store}>
+      <NavigationContainer>{routing}</NavigationContainer>
+    </Provider>
+  );
 }
 
 // auth

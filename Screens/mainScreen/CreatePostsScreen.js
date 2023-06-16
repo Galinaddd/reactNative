@@ -47,7 +47,7 @@ export default function CreatePostsScreen({ navigation }) {
     console.log("publishing");
     console.log("navigation", navigation);
     keyboardHide();
-    const newPost = { ...state, photo };
+    const newPost = { ...state, photo, location };
     console.log("newPost", newPost);
     navigation.navigate("DefaultScreen", newPost);
   };
