@@ -20,7 +20,6 @@ import { authSignInUser } from "../../redux/auth/authOperation";
 import image from "../../assets/images/BG.jpg";
 
 const initialState = {
-  login: "",
   email: "",
   password: "",
 };
@@ -53,7 +52,7 @@ export default function LoginScreen({ navigation }) {
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
-    console.log(state);
+    console.log("state", state);
     setState(initialState);
   };
 

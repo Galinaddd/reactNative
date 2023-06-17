@@ -4,15 +4,20 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { db, auth } from "../../firebase/config";
-
+import { authSlice } from "./authReducer";
 export const authSignUpUser =
   ({ email, password, login }) =>
   async (dispatch, getState) => {
     console.log("it is auth sign up");
     console.log("email, password, login", email, password, login);
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log("user", user);
+      dispatch(authSlice.actions.updateUserProfile({ userId: user.uid }));
     } catch (error) {
       console.log("error", error);
       console.lof("error.message", error.message);
