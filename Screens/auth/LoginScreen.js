@@ -13,6 +13,10 @@ import {
   Dimensions,
 } from "react-native";
 
+import { useDispatch } from "react-redux";
+
+import { authSignInUser } from "../../redux/auth/authOperation";
+
 import image from "../../assets/images/BG.jpg";
 
 const initialState = {
@@ -25,6 +29,9 @@ export default function LoginScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+
+  const dispatch = useDispatch();
+
   // const [dimensions, setDimensions] = useState(
   //   Dimensions.get("window").width - 30 * 2
   // );
@@ -49,6 +56,11 @@ export default function LoginScreen({ navigation }) {
     console.log(state);
     setState(initialState);
   };
+
+  const handleSubmit = () => {
+    keyboardHide();
+    dispatch(authSignInUser(state));
+  };
   //   console.log("keyboard", Keyboard.isVisible());
 
   return (
@@ -70,7 +82,7 @@ export default function LoginScreen({ navigation }) {
               <View
                 style={{
                   ...styles.form,
-                  marginBottom: isShowKeyBoard ? -97 : 144,
+                  // marginBottom: isShowKeyBoard ? -97 : 144,
                 }}
               >
                 <TextInput
@@ -128,7 +140,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                   style={styles.button}
                   activeOpacity={0.7}
-                  onPress={keyboardHide}
+                  onPress={handleSubmit}
                 >
                   <Text style={styles.buttonTitle}>Увійти</Text>
                 </TouchableOpacity>

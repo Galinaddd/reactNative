@@ -13,6 +13,9 @@ import {
   Dimensions,
   Button,
 } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { authSignUpUser } from "../../redux/auth/authOperation";
 
 import image from "../../assets/images/BG.jpg";
 
@@ -26,6 +29,9 @@ export default function RegistrationScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+
+  const dispatch = useDispatch();
+
   let containerMarginbottom;
   // const [dimensions, setDimensions] = useState(
   //   Dimensions.get("window").width - 30 * 2
@@ -51,9 +57,14 @@ export default function RegistrationScreen({ navigation }) {
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
-    console.log(state);
+    console.log("state in register page");
     setState(initialState);
-    console.log();
+  };
+
+  const handleSubmit = () => {
+    console.log("it is handlesubmit in register");
+    keyboardHide();
+    dispatch(authSignUpUser(state));
   };
 
   return (
@@ -157,7 +168,7 @@ export default function RegistrationScreen({ navigation }) {
               <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.7}
-                onPress={keyboardHide}
+                onPress={handleSubmit}
               >
                 <Text style={styles.buttonTitle}>Зареєстуватися</Text>
               </TouchableOpacity>
