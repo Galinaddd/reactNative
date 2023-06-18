@@ -3,25 +3,17 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useRoute } from "../router";
 import { useSelector, useDispatch } from "react-redux";
 
-import { onAuthStateChanged } from "firebase/auth";
-
-import { auth } from "../firebase/config";
+import { authStateChangeUser } from "../redux/auth/authOperation";
 
 const Main = () => {
-  const [user, setUser] = useState(null);
+  const { stateChange } = useSelector((state) => state.auth);
 
-    const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-//   const dispatch = useDispatch();
-
-    console.log("state", state);
-  await onAuthStateChanged(auth, (user) => {
-    // console.log("user change", user);
-    setUser(user);
-  });
-
-  const routing = useRoute(user);
-  useEffect(() => {}, []);
+  const routing = useRoute(stateChange);
+  useEffect(() => {
+    dispatch(authStateChangeUser());
+  }, []);
 
   return <NavigationContainer>{routing}</NavigationContainer>;
 };

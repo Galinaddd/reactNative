@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import { auth } from "../../firebase/config";
 import {
-  StyleSheet,
-  Text,
-  View,
-  //   View,
-  //   ImageBackground,
-  //   TextInput,
-  //   TouchableOpacity,
-  //   Platform,
-  //   KeyboardAvoidingView,
-  //   Keyboard,
-  //   TouchableWithoutFeedback,
-  //   Dimensions,
-  //   Button,
-} from "react-native";
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+  signOut,
+} from "firebase/auth";
 
 export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>ProfileScreen</Text>
+      <Button
+        title="signOut"
+        onPress={() => {
+          console.log("press on sign out");
+          signOut(auth);
+        }}
+      />
     </View>
   );
 }
