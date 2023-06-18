@@ -5,7 +5,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-import { db, auth } from "../../firebase/config";
+import { auth } from "../../firebase/config";
 import { authSlice } from "./authReducer";
 
 export const authSignUpUser =
@@ -14,6 +14,7 @@ export const authSignUpUser =
     try {
       console.log(" it is authSignUpUser operation");
       await createUserWithEmailAndPassword(auth, email, password);
+
       const user = auth.currentUser;
       console.log(" user", user);
 
@@ -30,14 +31,12 @@ export const authSignUpUser =
       }
       const { uid, displayName } = auth.currentUser;
 
-      //   const { uid, displayName } = auth.currentUser;
-      //   console.log("uid, displayname", uid, displayName);
-      dispatch(
-        authSlice.actions.updateUserProfile({
-          userId: uid,
-          login: displayName,
-        })
-      );
+      const userUpdateProfile = {
+        userId: uid,
+        login: displayName,
+      };
+
+      dispatch(authSlice.actions.updateUserProfile(userUpdateProfile));
     } catch (error) {
       console.log("error", error);
       console.lof("error.message", error.message);
@@ -62,16 +61,17 @@ export const authSignOutUser = () => async (dispatch, getState) => {};
 
 export const authStateChangeUser = () => async (dispatch, getState) => {
   await onAuthStateChanged(auth, (user) => {
-    console.log("user change", user);
-    setUser(user);
-    // if (user) {
-    //   // User is signed in, see docs for a list of available properties
-    //   // https://firebase.google.com/docs/reference/js/auth.user
-    //   const uid = user.uid;
-    //   // ...
-    // } else {
-    //   // User is signed out
-    //   // ...
-    // }
+    if (user) {
+      const userUpdateProfile = {
+        userId: user.uid,
+        login: user.displayName,
+      };
+
+      dispatch(authSlice.actions.updateUserProfile(userUpdateProfile));
+      dispatch(authSlice.actions.authStateChange(true));
+    } else {
+      // User is signed out
+      // ...
+    }
   });
 };
