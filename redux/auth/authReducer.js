@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const stateStart = {
+  userId: null,
+  login: null,
+  stateChange: false,
+};
+
 export const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    userId: null,
-    login: null,
-    stateChange: false,
-  },
+  initialState: stateStart,
   reducers: {
     updateUserProfile: (state, { payload }) => ({
       ...state,
@@ -17,6 +19,6 @@ export const authSlice = createSlice({
       ...state,
       stateChange: payload.stateChange,
     }),
+    authSignOut: (state, { payload }) => ({ stateStart }),
   },
 });
-console.log("authSlice ", authSlice);

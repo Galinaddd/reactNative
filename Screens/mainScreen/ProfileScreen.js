@@ -8,18 +8,22 @@ import {
   updateProfile,
   signOut,
 } from "firebase/auth";
+import { authSignOutUser } from "../../redux/auth/authOperation";
+
+import { useSelector, useDispatch } from "react-redux";
 
 export default function ProfileScreen({ navigation }) {
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    console.log("click on sign out");
+    dispatch(authSignOutUser());
+  };
+
   return (
     <View style={styles.container}>
       <Text>ProfileScreen</Text>
-      <Button
-        title="signOut"
-        onPress={() => {
-          console.log("press on sign out");
-          signOut(auth);
-        }}
-      />
+      <Button title="signOut" onPress={() => signOut()} />
     </View>
   );
 }

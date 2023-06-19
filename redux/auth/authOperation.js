@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../../firebase/config";
-import { authSlice } from "./authReducer";
+import { authSlice, authSignOut } from "./authReducer";
 
 export const authSignUpUser =
   ({ email, password, login }) =>
@@ -59,7 +59,9 @@ export const authSignInUser =
   };
 
 export const authSignOutUser = () => async (dispatch, getState) => {
-  await signOut(auth);
+  const statusSignOut = await signOut(auth);
+  console.log(statusSignOut);
+  dispatch(authSlice.actions.authSignOut());
 };
 
 export const authStateChangeUser = () => async (dispatch, getState) => {
