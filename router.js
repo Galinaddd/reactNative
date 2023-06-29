@@ -33,6 +33,8 @@ export const useRoute = (isAuth) => {
   }
   return (
     <MainTab.Navigator
+    // optionsScreen={{ tabBarVisible: false }}
+    // screenOptions={{ tabBarVisible: false }}
     // screenOptions={{
     //   headerStyle: {
     //     height: 88,
@@ -60,6 +62,7 @@ export const useRoute = (isAuth) => {
     //     paddingTop: 9,
     //     paddingBottom: 34,
     //   },
+
     // }}
     >
       <MainTab.Screen
@@ -100,6 +103,7 @@ export const useRoute = (isAuth) => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          tabBarVisible: false,
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <Image

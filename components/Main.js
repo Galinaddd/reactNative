@@ -7,8 +7,8 @@ import { authStateChangeUser } from "../redux/auth/authOperation";
 
 const Main = () => {
   const { stateChange } = useSelector((state) => state.auth);
-  const stateRedux = useSelector((state) => state);
-  console.log("stateRedux", stateRedux);
+  // const stateRedux = useSelector((state) => state);
+  // console.log("stateRedux", stateRedux);
   const dispatch = useDispatch();
 
   const routing = useRoute(stateChange);

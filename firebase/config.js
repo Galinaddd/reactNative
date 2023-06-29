@@ -8,7 +8,7 @@ import { getAuth } from "firebase/auth";
 // // Функція для підключення бази даних у проект
 import { getFirestore } from "firebase/firestore";
 // // Функція для підключення сховища файлів в проект
-import { getStorage } from "firebase/storage";
+import { getStorage, ref } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAy5X7tY69MdCdrb1o4TmAJEFRyVN21rkg",
@@ -25,3 +25,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+// export const storageRef = ref(storage);

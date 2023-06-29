@@ -13,6 +13,10 @@ import {
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 
+import { db, storage, auth } from "../../firebase/config";
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 const initialState = {
   name: "",
   place: "",
@@ -43,12 +47,14 @@ export default function CreatePostsScreen({ navigation }) {
 
     setPhoto(photo.uri);
   };
+
   const publishPost = () => {
     console.log("publishing");
     console.log("navigation", navigation);
     keyboardHide();
     const newPost = { ...state, photo, location };
     console.log("newPost", newPost);
+    uploadPhotoToServer();
     navigation.navigate("DefaultScreen", newPost);
   };
 
@@ -61,6 +67,23 @@ export default function CreatePostsScreen({ navigation }) {
       }
     })();
   }, []);
+
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+    const uniquPostId = Date.now().toString();
+    try {
+      const storageRef = ref(storage, `postImage/${uniquPostId}`);
+      console.log("storageRef", storageRef);
+      const data = await uploadBytes(storageRef, file);
+      console.log("data", data);
+
+      const processedPhoto = await getDownloadURL(storageRef);
+      console.log("processedPhoto", processedPhoto);
+    } catch (error) {
+      console.log("error is", error);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
