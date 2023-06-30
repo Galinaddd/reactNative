@@ -33,7 +33,6 @@ export const useRoute = (isAuth) => {
   }
   return (
     <MainTab.Navigator
-    // optionsScreen={{ tabBarVisible: false }}
     // screenOptions={{ tabBarVisible: false }}
     // screenOptions={{
     //   headerStyle: {

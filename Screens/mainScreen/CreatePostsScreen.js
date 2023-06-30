@@ -10,12 +10,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { useSelector } from "react-redux";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 
 import { db, storage, auth } from "../../firebase/config";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 
 const initialState = {
   name: "",
@@ -28,6 +30,18 @@ export default function CreatePostsScreen({ navigation }) {
   const [photo, setPhoto] = useState(null);
   const [state, setState] = useState(initialState);
   const [isShowKeyBoard, setIsShowKeyBoard] = useState(false);
+
+  const { userId, login } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+    })();
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
@@ -43,7 +57,7 @@ export default function CreatePostsScreen({ navigation }) {
     setLocation(location.coords);
     // const location = await Location.getCurrentPositionAsync();
     console.log("location", location);
-    setLocation(location.coords);
+    // setLocation(location.coords);
 
     setPhoto(photo.uri);
   };
@@ -54,19 +68,29 @@ export default function CreatePostsScreen({ navigation }) {
     keyboardHide();
     const newPost = { ...state, photo, location };
     console.log("newPost", newPost);
-    uploadPhotoToServer();
+    // uploadPhotoToServer();
+    uploadPostToServer();
     navigation.navigate("DefaultScreen", newPost);
   };
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-        return;
-      }
-    })();
-  }, []);
+  const uploadPostToServer = async () => {
+    const photoUrl = await uploadPhotoToServer();
+    try {
+      const postRef = await addDoc(collection(db, "posts"), {
+        photo: photoUrl,
+        name: state.name,
+        place: state.place,
+        location,
+        userId,
+        login,
+        // comments,
+      });
+      console.log("Document written with ID: ", postRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      throw e;
+    }
+  };
 
   const uploadPhotoToServer = async () => {
     const response = await fetch(photo);
@@ -80,6 +104,7 @@ export default function CreatePostsScreen({ navigation }) {
 
       const processedPhoto = await getDownloadURL(storageRef);
       console.log("processedPhoto", processedPhoto);
+      return processedPhoto;
     } catch (error) {
       console.log("error is", error);
     }
@@ -139,27 +164,34 @@ export default function CreatePostsScreen({ navigation }) {
             setState((prevState) => ({ ...prevState, name: value }))
           }
         />
-        <TextInput
-          style={{ ...styles.input, paddingLeft: 32 }}
-          placeholder="Місцевість..."
-          name="Place"
-          placeholderTextColor="#bdbdbd"
-          value={state.place}
-          onFocus={(event) => {
-            setIsShowKeyBoard(true);
-            event.target.setNativeProps({
-              style: styles.inputFocused,
-            });
-          }}
-          onBlur={(event) => {
-            event.target.setNativeProps({
-              style: styles.input,
-            });
-          }}
-          onChangeText={(value) =>
-            setState((prevState) => ({ ...prevState, place: value }))
-          }
-        />
+        <View style={{ position: "relative" }}>
+          <TextInput
+            style={{ ...styles.input, paddingLeft: 32 }}
+            placeholder="Місцевість..."
+            name="Place"
+            placeholderTextColor="#bdbdbd"
+            value={state.place}
+            onFocus={(event) => {
+              setIsShowKeyBoard(true);
+              event.target.setNativeProps({
+                style: styles.inputFocused,
+              });
+            }}
+            onBlur={(event) => {
+              event.target.setNativeProps({
+                style: styles.input,
+              });
+            }}
+            onChangeText={(value) =>
+              setState((prevState) => ({ ...prevState, place: value }))
+            }
+          />
+          <Image
+            style={styles.iconMapPin}
+            source={require("../../assets/icons/map-pin.png")}
+            onPress={() => redirect("Map")}
+          />
+        </View>
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.7}
@@ -219,10 +251,11 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Regular",
     fontSize: 16,
     lineHeight: 19,
-    marginTop: 33,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: "#E8E8E8",
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+
+    borderBottomColor: "#E8E8E8",
+    justifyContent: "center",
   },
   inputFocused: {
     backgroundColor: "#ffffff",
@@ -234,6 +267,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     fontFamily: "Roboto-Regular",
+  },
+  iconMapPin: {
+    position: "absolute",
+    bottom: 15,
+    left: 0,
   },
   button: {
     marginTop: 32,
