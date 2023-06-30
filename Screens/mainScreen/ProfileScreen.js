@@ -16,7 +16,7 @@ export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const signOut = () => {
-    console.log("click on sign out");
+    // console.log("click on sign out");
     dispatch(authSignOutUser());
   };
 

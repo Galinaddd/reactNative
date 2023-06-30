@@ -57,12 +57,12 @@ export default function RegistrationScreen({ navigation }) {
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
-    console.log("state in register page");
+    // console.log("state in register page");
     setState(initialState);
   };
 
   const handleSubmit = () => {
-    console.log("it is handlesubmit in register");
+    // console.log("it is handlesubmit in register");
     keyboardHide();
     dispatch(authSignUpUser(state));
   };

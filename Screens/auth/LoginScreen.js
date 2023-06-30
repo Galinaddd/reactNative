@@ -52,7 +52,7 @@ export default function LoginScreen({ navigation }) {
   const keyboardHide = () => {
     setIsShowKeyBoard(false);
     Keyboard.dismiss();
-    console.log("state", state);
+    // console.log("state", state);
     setState(initialState);
   };
 

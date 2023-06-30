@@ -13,11 +13,11 @@ export const authSignUpUser =
   ({ email, password, login }) =>
   async (dispatch, getState) => {
     try {
-      console.log(" it is authSignUpUser operation");
+      // console.log(" it is authSignUpUser operation");
       await createUserWithEmailAndPassword(auth, email, password);
 
       const user = auth.currentUser;
-      console.log(" user", user);
+      // console.log(" user", user);
 
       // user.updateProfile({ displayName: login });
 
@@ -47,11 +47,11 @@ export const authSignUpUser =
 export const authSignInUser =
   ({ email, password }) =>
   async (dispatch, getState) => {
-    console.log("it is auth sign in");
-    console.log("email, password, nickname", { email, password });
+    // console.log("it is auth sign in");
+    // console.log("email, password, nickname", { email, password });
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log("user", user);
+      // console.log("user", user);
     } catch (error) {
       console.log("error", error);
       console.lof("error.message", error.message);
@@ -60,7 +60,7 @@ export const authSignInUser =
 
 export const authSignOutUser = () => async (dispatch, getState) => {
   const statusSignOut = await signOut(auth);
-  console.log(statusSignOut);
+  // console.log(statusSignOut);
   dispatch(authSlice.actions.authSignOut());
 };
 

@@ -14,10 +14,10 @@ import { useSelector } from "react-redux";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 
-import { db, storage, auth } from "../../firebase/config";
-
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+
+import { db, storage, auth } from "../../firebase/config";
 
 const initialState = {
   name: "",
@@ -56,21 +56,21 @@ export default function CreatePostsScreen({ navigation }) {
     const location = await Location.getCurrentPositionAsync({});
     setLocation(location.coords);
     // const location = await Location.getCurrentPositionAsync();
-    console.log("location", location);
+    // console.log("location", location);
     // setLocation(location.coords);
 
     setPhoto(photo.uri);
   };
 
   const publishPost = () => {
-    console.log("publishing");
-    console.log("navigation", navigation);
+    // console.log("publishing");
+    // console.log("navigation", navigation);
     keyboardHide();
     const newPost = { ...state, photo, location };
-    console.log("newPost", newPost);
+    // console.log("newPost", newPost);
     // uploadPhotoToServer();
     uploadPostToServer();
-    navigation.navigate("DefaultScreen", newPost);
+    navigation.navigate("DefaultScreen");
   };
 
   const uploadPostToServer = async () => {
@@ -85,7 +85,7 @@ export default function CreatePostsScreen({ navigation }) {
         login,
         // comments,
       });
-      console.log("Document written with ID: ", postRef.id);
+      // console.log("Document written with ID: ", postRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
       throw e;
@@ -98,12 +98,12 @@ export default function CreatePostsScreen({ navigation }) {
     const uniquPostId = Date.now().toString();
     try {
       const storageRef = ref(storage, `postImage/${uniquPostId}`);
-      console.log("storageRef", storageRef);
+      // console.log("storageRef", storageRef);
       const data = await uploadBytes(storageRef, file);
-      console.log("data", data);
+      // console.log("data", data);
 
       const processedPhoto = await getDownloadURL(storageRef);
-      console.log("processedPhoto", processedPhoto);
+      // console.log("processedPhoto", processedPhoto);
       return processedPhoto;
     } catch (error) {
       console.log("error is", error);
