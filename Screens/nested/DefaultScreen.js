@@ -13,31 +13,17 @@ export default function DefaultScreen({ navigation, route }) {
     const q = query(collection(db, "posts"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      // console.log("1      querySnapshot  ", querySnapshot);
+      console.log("1      querySnapshot  ", querySnapshot);
 
       querySnapshot.forEach((doc) => {
-        // console.log(" 2....doc  ", doc.data());
-        updatingPosts.push(doc.data());
+        console.log(" 2....doc  ", doc.data());
+        updatingPosts.push({ ...doc.data(), id: doc.id });
       });
+      console.log(".......updatPosts is  ", updatingPosts);
+      console.log("posts  ", posts);
+
+      setPosts(updatingPosts);
     });
-    // console.log("3.......unsubscribe is  ", unsubscribe);
-    // console.log("4.......updatingPosts is  ", updatingPosts);
-    setPosts(updatingPosts);
-
-    // const unsub = onSnapshot(doc(db, "posts"), (doc) => {
-    //   console.log("Current data: ", doc.data());
-    // });
-    // setPosts(unsub);
-
-    // it is good but not uddate posts
-    // const querySnapshot = await getDocs(collection(db, "posts"));
-
-    // // console.log("querySnapshot", querySnapshot);
-    // querySnapshot.forEach((doc) => {
-    //   updatingPosts.push(doc.data());
-    // });
-    // console.log("updatingPosts", updatingPosts);
-    // setPosts(updatingPosts);
   };
 
   // getAllPosts();
@@ -49,7 +35,8 @@ export default function DefaultScreen({ navigation, route }) {
   console.log("posts", posts);
   console.log("navigation", navigation);
 
-  const handleRedirect = (screen) => navigation.navigate(screen);
+  const handleRedirect = (screen, { location = {}, postId = null }) =>
+    navigation.navigate(screen, { location, postId });
 
   return (
     <View style={styles.container}>

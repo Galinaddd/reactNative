@@ -1,6 +1,7 @@
 import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
 
 export function PostCard({ postInfo, styleItem, redirect }) {
+  console.log("postInfo", postInfo);
   return (
     <View style={styleItem}>
       <Image style={styles.image} source={{ uri: postInfo.photo }} />
@@ -9,7 +10,7 @@ export function PostCard({ postInfo, styleItem, redirect }) {
         <TouchableOpacity
           style={styles.comments}
           onPress={() => {
-            redirect("Comments");
+            redirect("Comments", { postId: postInfo.id });
           }}
         >
           <Image
@@ -21,13 +22,12 @@ export function PostCard({ postInfo, styleItem, redirect }) {
         <TouchableOpacity
           style={styles.map}
           onPress={() => {
-            redirect("Map");
+            redirect("Map", { location: postInfo.location });
           }}
         >
           <Image
             style={{ width: 24, height: 24 }}
             source={require("../assets/icons/map-pin.png")}
-            onPress={() => redirect("Map")}
           />
           <Text style={styles.placeText}>{postInfo.name}</Text>
         </TouchableOpacity>

@@ -54,6 +54,7 @@ export default function CreatePostsScreen({ navigation }) {
     const photo = await camera.takePictureAsync();
 
     const location = await Location.getCurrentPositionAsync({});
+    console.log("location.coords", location.coords);
     setLocation(location.coords);
     // const location = await Location.getCurrentPositionAsync();
     // console.log("location", location);
