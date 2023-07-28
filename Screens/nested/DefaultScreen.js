@@ -9,11 +9,11 @@ export default function DefaultScreen({ navigation, route }) {
   const [posts, setPosts] = useState([]);
 
   const getAllPosts = async () => {
-    const updatingPosts = [];
     const q = query(collection(db, "posts"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("1      querySnapshot  ", querySnapshot);
+      const updatingPosts = [];
 
       querySnapshot.forEach((doc) => {
         console.log(" 2....doc  ", doc.data());

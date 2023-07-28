@@ -81,6 +81,7 @@ export default function CreatePostsScreen({ navigation }) {
         photo: photoUrl,
         name: state.name,
         place: state.place,
+        comments: [],
         location,
         userId,
         login,

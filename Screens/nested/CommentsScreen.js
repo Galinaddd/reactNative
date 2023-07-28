@@ -11,6 +11,13 @@ import { useSelector } from "react-redux";
 import { db } from "../../firebase/config";
 
 import { getFirestore, listCollections } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  arrayUnion,
+  updateDoc,
+  setDoc,
+} from "firebase/firestore";
 
 const CommentsScreen = ({ route }) => {
   const { postId } = route.params;
@@ -32,17 +39,26 @@ const CommentsScreen = ({ route }) => {
     //   return [];
     // }
 
-    try {
-      const ref = doc(db, "posts", "xtmGEd9u9nQjrnjThUsX");
-      console.log("1");
-      await updateDoc(ref, {
-        comment,
-        login,
-      });
-      console.log("document updated");
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    console.log("1");
+    const ref = doc(db, "posts", postId);
+
+    console.log("ref", ref);
+    console.log("before apdate");
+
+    await updateDoc(ref, {
+      comments: arrayUnion({ login, text: comment }),
+    });
+
+    // await updateDoc(ref, {
+    //   comment,
+    //   login,
+    // });
+    console.log("document updated");
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    setComment("");
   };
 
   return (
@@ -74,6 +90,7 @@ const CommentsScreen = ({ route }) => {
           style={styles.input}
           placeholder="Коментувати..."
           placeholderTextColor="#BDBDBD"
+          value={comment}
           // value={state.email}
 
           onChangeText={setComment}
