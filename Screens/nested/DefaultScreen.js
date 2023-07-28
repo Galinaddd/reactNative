@@ -11,29 +11,19 @@ export default function DefaultScreen({ navigation, route }) {
   const getAllPosts = async () => {
     const q = query(collection(db, "posts"));
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      console.log("1      querySnapshot  ", querySnapshot);
+    onSnapshot(q, (querySnapshot) => {
       const updatingPosts = [];
-
       querySnapshot.forEach((doc) => {
-        console.log(" 2....doc  ", doc.data());
         updatingPosts.push({ ...doc.data(), id: doc.id });
       });
-      console.log(".......updatPosts is  ", updatingPosts);
-      console.log("posts  ", posts);
-
       setPosts(updatingPosts);
     });
   };
 
-  // getAllPosts();
   useEffect(() => {
     console.log("useffect in defaultscreen");
     getAllPosts();
   }, []);
-
-  console.log("posts", posts);
-  console.log("navigation", navigation);
 
   const handleRedirect = (screen, { location = {}, postId = null }) =>
     navigation.navigate(screen, { location, postId });
@@ -51,14 +41,12 @@ export default function DefaultScreen({ navigation, route }) {
         )}
         decelerationRate={0.5}
       />
-      <Text>PostsScreen</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     paddingTop: 32,
     paddingHorizontal: 16,
     backgroundColor: "#ffffff",

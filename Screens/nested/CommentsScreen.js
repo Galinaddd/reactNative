@@ -26,38 +26,15 @@ const CommentsScreen = ({ route }) => {
   const { login } = useSelector((state) => state.auth);
 
   const addComment = async () => {
-    console.log("press on add comment");
-    console.log("postId", postId);
-    console.log("db", db);
-
-    // try {
-    //   const collections = await listCollections(db);
-    //   const collectionNames = collections.map((collection) => collection.id);
-    //   return collectionNames;
-    // } catch (error) {
-    //   console.log("Error getting collection names:", error);
-    //   return [];
-    // }
-
-    // try {
-    console.log("1");
-    const ref = doc(db, "posts", postId);
-
-    console.log("ref", ref);
-    console.log("before apdate");
-
-    await updateDoc(ref, {
-      comments: arrayUnion({ login, text: comment }),
-    });
-
-    // await updateDoc(ref, {
-    //   comment,
-    //   login,
-    // });
-    console.log("document updated");
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const ref = doc(db, "posts", postId);
+      await updateDoc(ref, {
+        comments: arrayUnion({ login, text: comment }),
+      });
+      console.log("document updated");
+    } catch (error) {
+      console.log(error);
+    }
     setComment("");
   };
 
@@ -91,8 +68,6 @@ const CommentsScreen = ({ route }) => {
           placeholder="Коментувати..."
           placeholderTextColor="#BDBDBD"
           value={comment}
-          // value={state.email}
-
           onChangeText={setComment}
         />
         <TouchableOpacity
